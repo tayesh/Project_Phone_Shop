@@ -1,10 +1,10 @@
 .heading-color{
-    color: rgba(61, 119, 153, 0.986);
-    border: 2px solid rgb(147, 106, 243);
+    color: rgba(200, 235, 255, 0.986);
+    border: 2px solid rgb(213, 198, 248);
     width: 50%;
     border-radius: 10px;
     margin-top: 20px;
 }
 body{
-    background-color: rgba(21, 134, 98, 0.527);
+    background-color: rgba(74, 85, 82, 0.644);
 }

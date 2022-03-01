@@ -1,3 +1,4 @@
+const errorMessage = document.getElementById('error-message').style.display = "none";
 const searchFood = () => {
   const searchfield = document.getElementById('search-field')
   const searchText = searchfield.value;
@@ -9,28 +10,65 @@ const searchFood = () => {
     .then(result => dispaySearchResult(result.data))
 }
 const dispaySearchResult = data => {
-  const searchresult = document.getElementById('search-result')
-  searchresult.innerHTML = ``;
-  const mealDetails = document.getElementById('meal-details');
-  mealDetails.innerHTML = ``;
-  data.forEach(phone => {
-    // console.log(meal);
-    const div = document.createElement('div');
-    div.classList.add('col');
-    div.innerHTML = `
-        <div onclick="loadDetail('${phone.slug}')" class="card">
-                <img src="${phone.image}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">${phone.phone_name}</h5>
-                    // <p class="card-text">phone details
-                    <br>(see more)...</p>
-                </div>
+  if (data.length === 0) {
+    const errorMessage = document.getElementById('error-message').style.display = "block";
+    const searchresult = document.getElementById('search-result');
+    searchresult.innerHTML = ``;
+    const mealDetails = document.getElementById('meal-details');
+    mealDetails.innerHTML = ``;
+
+
+  }
+  else if (data.length !== 0) {
+    const errorMessage = document.getElementById('error-message').style.display = "none";
+    const searchresult = document.getElementById('search-result')
+    searchresult.innerHTML = ``;
+    console.log(data);
+    const mealDetails = document.getElementById('meal-details');
+    mealDetails.innerHTML = ``;
+    if (data.length > 20) {
+      for (let i = 0; i < 20; i++) {
+        const div = document.createElement('div');
+        div.classList.add('col');
+        div.innerHTML = `
+        <div class="card">
+            <img src="${data[i].image}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">${data[i].phone_name}</h5>
+                <h6 class="card-text">${data[i].brand}</h6>
+                <button onclick="loadDetail('${data[i].slug}')" class="btn btn-primary" type="button">See more</button>
             </div>
+        </div>
         `
-    searchresult.appendChild(div);
+        searchresult.appendChild(div);
+
+      }
+    }
+    else if (data.length <= 20) {
+      data.forEach(phone => {
+        // console.log(meal);
+        const div = document.createElement('div');
+        div.classList.add('col');
+        div.innerHTML = `
+        <div  class="card">
+            <img src="${phone.image}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">${phone.phone_name}</h5>
+                <h6 class="card-text">${phone.brand}</h6>
+                <button onclick="loadDetail('${phone.slug}')" class="btn btn-primary" type="button">See more</button>
+            </div>
+        </div>
+        `
+        searchresult.appendChild(div);
+
+      });
+
+    }
+  }
 
 
-  });
+
+
 }
 const loadDetail = phoneID => {
   const url = `https://openapi.programming-hero.com/api/phone/${phoneID}`
@@ -49,7 +87,7 @@ const displyDetail = phone => {
     releaseDate = phone.releaseDate;
   }
   const mealDetails = document.getElementById('meal-details');
-  mealDetails.innerHTML = ``;
+
   let sensors = phone.mainFeatures.sensors;
   let i = 0;
   let templateString = ``;
