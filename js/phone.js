@@ -1,15 +1,18 @@
+// declairing error variable to show error for invalid inputs****
 const errorMessage = document.getElementById('error-message').style.display = "none";
-const searchFood = () => {
+// taking search input*****
+const searchPhone = () => {
   const searchfield = document.getElementById('search-field')
   const searchText = searchfield.value;
-  // console.log(searchText)
   searchfield.value = "";
   const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`
   fetch(url)
     .then(res => res.json())
     .then(result => dispaySearchResult(result.data))
 }
+// showing search result*******
 const dispaySearchResult = data => {
+  // cheking valid input for showing result*****
   if (data.length === 0) {
     const errorMessage = document.getElementById('error-message').style.display = "block";
     const searchresult = document.getElementById('search-result');
@@ -26,6 +29,7 @@ const dispaySearchResult = data => {
     console.log(data);
     const phoneDetails = document.getElementById('phone-details');
     phoneDetails.innerHTML = ``;
+    //making sure it doesnt show more than 20 search result***** 
     if (data.length > 20) {
       for (let i = 0; i < 20; i++) {
         const div = document.createElement('div');
@@ -46,7 +50,6 @@ const dispaySearchResult = data => {
     }
     else if (data.length <= 20) {
       data.forEach(phone => {
-        // console.log(phone);
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
@@ -70,6 +73,8 @@ const dispaySearchResult = data => {
 
 
 }
+// detail section******
+//fetching info for showing detail from API *****
 const loadDetail = phoneID => {
   const url = `https://openapi.programming-hero.com/api/phone/${phoneID}`
   fetch(url)
@@ -77,8 +82,9 @@ const loadDetail = phoneID => {
     .then(result => displyDetail((result.data)));
 
 }
+// showing detail*****
 const displyDetail = phone => {
-  console.log(phone)
+  // showing release date****
   let releaseDate = undefined;
   if (phone.releaseDate === '') {
     releaseDate = 'No release date found';
@@ -87,7 +93,7 @@ const displyDetail = phone => {
     releaseDate = phone.releaseDate;
   }
   const phoneDetails = document.getElementById('phone-details');
-
+  // sensors****
   let sensors = phone.mainFeatures.sensors;
   let i = 0;
   let templateString = ``;
@@ -95,6 +101,7 @@ const displyDetail = phone => {
     templateString = templateString + `<li> ${sensors[i]}</li>`;
     i++;
   }
+  // Others****
   const othersList = objListMaker(phone.others)
 
 
@@ -124,6 +131,7 @@ const displyDetail = phone => {
     `
   phoneDetails.appendChild(div);
 }
+// function for list making from object properties
 const objListMaker = object => {
 
   let objTemplateString = ``;
