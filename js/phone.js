@@ -95,22 +95,27 @@ const displyDetail = phone => {
     templateString = templateString + `<li> ${sensors[i]}</li>`;
     i++;
   }
+  const othersList = objListMaker(phone.others)
+
 
   const div = document.createElement('div');
   div.innerHTML = `
-    <div class="card mb-3 mx-auto" style="max-width: 540px;">
+    <div class="card mb-3 mx-auto" style="max-width: 640px;">
   <div class="row g-0">
     <div class="col-md-4 col-sm-12 my-auto mx-auto ">
       <img src="${phone.image}" class="img-fluid mx-auto d-block rounded-start" alt="...">
     </div>
     <div class="col-md-8 col-sm-12">
       <div class="card-body">
-        <h5 class="card-title">${phone.name}</h5>
+        <h5 class="card-title">${phone.name}</h5>\
+        <h6>Main Features</h6>
         <p class="card-text"> ${phone.mainFeatures.chipSet}</p>
         <p class="card-text"> ${phone.mainFeatures.displaySize}</p>
         <p class="card-text">${phone.mainFeatures.memory}</p>
         <h6>Sensors</h6>
         <ul> ${templateString}</ul>
+        <h6>Others</h6>
+        <ul> ${othersList}</ul>
         <p class="card-text"><small class="text-muted">${releaseDate}</small></p>
       </div>
     </div>
@@ -118,4 +123,12 @@ const displyDetail = phone => {
 </div>
     `
   mealDetails.appendChild(div);
+}
+const objListMaker = object => {
+
+  let objTemplateString = ``;
+  for (const value in object) {
+    objTemplateString = objTemplateString + `<li> ${value} : ${object[value]} </li>`;
+  }
+  return objTemplateString;
 }
