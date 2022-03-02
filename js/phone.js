@@ -14,8 +14,8 @@ const dispaySearchResult = data => {
     const errorMessage = document.getElementById('error-message').style.display = "block";
     const searchresult = document.getElementById('search-result');
     searchresult.innerHTML = ``;
-    const mealDetails = document.getElementById('meal-details');
-    mealDetails.innerHTML = ``;
+    const phoneDetails = document.getElementById('phone-details');
+    phoneDetails.innerHTML = ``;
 
 
   }
@@ -24,8 +24,8 @@ const dispaySearchResult = data => {
     const searchresult = document.getElementById('search-result')
     searchresult.innerHTML = ``;
     console.log(data);
-    const mealDetails = document.getElementById('meal-details');
-    mealDetails.innerHTML = ``;
+    const phoneDetails = document.getElementById('phone-details');
+    phoneDetails.innerHTML = ``;
     if (data.length > 20) {
       for (let i = 0; i < 20; i++) {
         const div = document.createElement('div');
@@ -46,7 +46,7 @@ const dispaySearchResult = data => {
     }
     else if (data.length <= 20) {
       data.forEach(phone => {
-        // console.log(meal);
+        // console.log(phone);
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
@@ -86,7 +86,7 @@ const displyDetail = phone => {
   else {
     releaseDate = phone.releaseDate;
   }
-  const mealDetails = document.getElementById('meal-details');
+  const phoneDetails = document.getElementById('phone-details');
 
   let sensors = phone.mainFeatures.sensors;
   let i = 0;
@@ -122,7 +122,7 @@ const displyDetail = phone => {
   </div>
 </div>
     `
-  mealDetails.appendChild(div);
+  phoneDetails.appendChild(div);
 }
 const objListMaker = object => {
 
